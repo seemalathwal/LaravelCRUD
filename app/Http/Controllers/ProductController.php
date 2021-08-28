@@ -16,16 +16,13 @@ class ProductController extends Controller
             'qty'=>'required' 
              
         ]);
-       $product =  new Product;
+       $product = new Product;
        $product->name = $req->name;
        $product->description = $req->description;
        $product->price = $req->price;
        $product->quantity = $req->qty;
        $product->save();
        return response()->json(['message'=>'Product added Successfully'],200);
-
-
-
     }
 
     public function productLists()
@@ -33,6 +30,7 @@ class ProductController extends Controller
         $products = Product::all();
         return response()->json(['products'=>$products],200); 
     }
+
     public function showProduct($id)
     {
         $product = Product::find($id);
@@ -41,7 +39,6 @@ class ProductController extends Controller
         } else {
             return response()->json(['message'=>'No Product found'],404);
         }
-        
     }
 
     public function update(Request $req,$id )
@@ -53,27 +50,23 @@ class ProductController extends Controller
             'qty'=>'required' 
              
         ]);
-       $product = Product::find($id);
-       if ($product) {
-        $product->name = $req->name;
-        $product->description = $req->description;
-        $product->price = $req->price;
-        $product->quantity = $req->qty;
-        $product->update();
-        return response()->json(['message'=>'Product update Successfully'],200);
-
-       } else {
-        return response()->json(['message'=>'No Product Found '],404);
-       }
-    
-
-
+        $product = Product::find($id);
+        if ($product) {
+            $product->name = $req->name;
+            $product->description = $req->description;
+            $product->price = $req->price;
+            $product->quantity = $req->qty;
+            $product->update();
+            return response()->json(['message'=>'Product update Successfully'],200);
+        } else {
+            return response()->json(['message'=>'No Product Found '],404);
+        }
     }
+
     public function deleteProduct($id)
     {
         $product  = Product::find($id);  
-        if($product) 
-        {
+        if ($product) {
             $product->delete();
             return response()->json(['message'=>'product deleted successfully'],200 );
         } else {
